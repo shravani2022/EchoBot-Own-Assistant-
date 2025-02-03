@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <h1>AI Assistant</h1>
+            <div class="header-controls">
+                <button id="toggle-voice-response" title="Toggle Voice Response">🔇</button>
+                <button id="clear-button" title="Clear Chat History">🗑️</button>
+            </div>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+            <!-- Welcome message -->
+            <div class="message bot-message">
+                <div class="message-content">
+                    Hello! I'm your AI assistant. I can help you through text or voice. Feel free to type your message or click the microphone icon to speak.
+                </div>
+                <span class="message-time">{{ current_time }}</span>
+            </div>
+        </div>
+        <div class="chat-input-container">
+            <textarea 
+                id="user-input" 
+                placeholder="Type your message... (Shift + Enter for new line)"
+                rows="1"
+            ></textarea>
+            <button id="send-button" title="Send Message">
+                ➤
+            </button>
+            <button id="voice-input-button" title="Voice Input">
+                <span class="mic-icon">🎤</span>
+            </button>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+</body>
+</html>
