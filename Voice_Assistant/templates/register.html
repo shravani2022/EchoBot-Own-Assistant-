@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - AI Assistant</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+    <style>
+        /* Additional styles specific to registration */
+        .password-requirements {
+            font-size: 0.85rem;
+            color: #8892b0;
+            margin-top: 0.5rem;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .email-hint {
+            font-size: 0.85rem;
+            color: #8892b0;
+            margin-top: 0.5rem;
+        }
+
+        /* Success message styling */
+        .success-message {
+            color: #00d4ff;
+            text-align: center;
+            margin-top: 1rem;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: rgba(0, 212, 255, 0.1);
+            display: none;
+        }
+
+        .success-message:not(:empty) {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <h1>Create Account</h1>
+            <p class="subtitle">Join AI Assistant today</p>
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required minlength="3" maxlength="30">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                    <div class="email-hint">We'll never share your email with anyone else.</div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required minlength="8">
+                    <div class="password-requirements">
+                        Password must be at least 8 characters long
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" id="confirm-password" name="confirm-password" required>
+                </div>
+                <button type="submit">Create Account</button>
+            </form>
+            <div id="error-message" class="error-message"></div>
+            <div id="success-message" class="success-message"></div>
+            <p class="register-link">
+                Already have an account? <a href="/login">Log in</a>
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById('register-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            
+            if (password !== confirmPassword) {
+                document.getElementById('error-message').textContent = 'Passwords do not match';
+                return;
+            }
+            
+            const formData = {
+                username: document.getElementById('username').value,
+                email: document.getElementById('email').value,
+                password: password
+            };
+            
+            try {
+                const response = await fetch('/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    document.getElementById('success-message').textContent = 'Registration successful! Redirecting to login...';
+                    document.getElementById('error-message').textContent = '';
+                    // Clear form
+                    document.getElementById('register-form').reset();
+                    // Redirect to login page after 2 seconds
+                    setTimeout(() => {
+                        window.location.href = '/login';
+                    }, 2000);
+                } else {
+                    document.getElementById('error-message').textContent = data.error;
+                    document.getElementById('success-message').textContent = '';
+                }
+            } catch (error) {
+                document.getElementById('error-message').textContent = 'An error occurred. Please try again.';
+                document.getElementById('success-message').textContent = '';
+            }
+        });
+
+        // Real-time password match validation
+        document.getElementById('confirm-password').addEventListener('input', function() {
+            const password = document.getElementById('password').value;
+            const confirmPassword = this.value;
+            
+            if (confirmPassword && password !== confirmPassword) {
+                this.setCustomValidity('Passwords do not match');
+            } else {
+                this.setCustomValidity('');
+            }
+        });
+    </script>
+</body>
+</html>
