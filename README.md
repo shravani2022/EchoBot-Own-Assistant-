@@ -18,7 +18,7 @@ EchoSphere is an intelligent and responsive chatbot assistant designed to enhanc
 
 ✅ **Flask-Based Web App** – Built using Flask and SQLAlchemy for robust backend support.
 
-✅ **OpenAI Integration** – Uses OpenAI’s API for intelligent and accurate conversational responses.
+✅ **Mistral Integration** – Uses Mistral’s API for intelligent and accurate conversational responses.
 
 ✅ **User Preferences** – Customize themes, voice responses, and language settings.
 
@@ -30,7 +30,7 @@ EchoSphere is an intelligent and responsive chatbot assistant designed to enhanc
 
 - **Backend:** Flask, Flask-Login, SQLAlchemy
 - **Database:** SQLite
-- **AI & NLP:** OpenAI API
+- **AI & NLP:** Mistral API
 - **Voice Processing:** gTTS, SpeechRecognition
 - **Frontend:** HTML, CSS, JavaScript
 - **Environment Variables:** dotenv
